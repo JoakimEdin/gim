@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "explainable-transformer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "auto-circuit>=1.0.1",
+    "captum>=0.7.0",
+    "circuitsvis>=1.43.3",
+    "datasets>=2.14.4",
+    "einops>=0.8.0",
+    "fancy-einsum>=0.0.3",
+    "flax>=0.10.2",
+    "huggingface-hub[cli]>=0.29.3",
+    "ipykernel>=6.29.5",
+    "jaxtyping>=0.2.36",
+    "jupyter>=1.1.1",
+    "lxt>=2.0",
+    "matplotlib>=3.10.0",
+    "nbformat>=5.10.4",
+    "ninja>=1.11.1.4",
+    "numba>=0.61.2",
+    "pandas>=2.2.3",
+    "plotly>=5.24.1",
+    "polars>=1.19.0",
+    "pre-commit>=4.0.1",
+    "pyarrow>=18.1.0",
+    "scikit-learn>=1.6.1",
+    "seaborn>=0.13.2",
+    "torch==2.4",
+    "torchtyping>=0.1.4",
+    "transformer-lens>=2.11.0",
+    "transformers>=4.48.0",
+    "typeguard>=4.4.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+namespaces = false
+
+[tool.ruff.lint.per-file-ignores]
+"*.ipynb" = ["E402", "F811", "F722", "F821"]
