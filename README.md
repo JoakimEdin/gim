@@ -1,5 +1,7 @@
 Official repository for the paper GIM: Improved Interpretability for Large Language Models
 
+I've tested many approaches before ending up with GIM, and this is visible in the complexity of the code. GIM can be implemented in a simpler manner than in this repository, for example, by using Transformer Lens. I will release a better implementation after I've handed in my PhD thesis 1st of August.
+
 ## Setup
 ### Setup uv and pre-install
 
