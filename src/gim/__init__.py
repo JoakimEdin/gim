@@ -1,3 +1,3 @@
-from gim.context.gim import GIM
+from .context.gim import GIM
 
 __all__ = ["GIM"]
