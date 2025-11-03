@@ -64,17 +64,70 @@ V = 1000
 B, T = 4, 32
 
 model = TinyLM(vocab_size=V, d_model=128, n_layers=2, n_heads=4).to(device)
-batch_tokens = torch.randint(0, V, (B, T), device=device)
-batch_targets = torch.randint(0, V, (B,), device=device)
+tokens = torch.randint(0, V, (B, T), device=device)
+x = tokens[:, :-1]                                             # inputs  [B, T]
+y = tokens[:, 1:]                                              # targets [B, T]
 
 
-with GIM(model, freeze_norm=True, softmax_temperature=2.0,
-         q_scale=0.25, k_scale=0.25, v_scale=0.5):
-    logits = model(batch_tokens)
-    loss = F.cross_entropy(logits[:, -1, :], batch_targets)
+with GIM(model):
+    logits = model(x)  # [B, T, V]
+    loss = F.cross_entropy(
+        logits.reshape(-1, logits.size(-1)),  # [B*T, V]
+        y.reshape(-1)                         # [B*T]
+    )
     loss.backward()
 
 print("loss:", float(loss))
-print("Grad ||Wq||:", model.blocks[0].attn.Wq.weight.grad.norm().item())
-print("Grad ||Wk||:", model.blocks[0].attn.Wk.weight.grad.norm().item())
-print("Grad ||Wv||:", model.blocks[0].attn.Wv.weight.grad.norm().item())
+print("||dW_Q||:", model.blocks[0].attn.Wq.weight.grad.norm().item())
+print("||dW_K||:", model.blocks[0].attn.Wk.weight.grad.norm().item())
+print("||dW_V||:", model.blocks[0].attn.Wv.weight.grad.norm().item())
+model.zero_grad(set_to_none=True)
+
+
+with GIM(model,
+         freeze_norm=True,
+         softmax_temperature=2.0,
+         q_scale=0.25, k_scale=0.25, v_scale=0.5):
+    logits = model(x)  # [B, T, V]
+    loss = F.cross_entropy(
+        logits.reshape(-1, logits.size(-1)),  # [B*T, V]
+        y.reshape(-1)                         # [B*T]
+    )
+    loss.backward()
+
+print("loss:", float(loss))
+print("||dW_Q||:", model.blocks[0].attn.Wq.weight.grad.norm().item())
+print("||dW_K||:", model.blocks[0].attn.Wk.weight.grad.norm().item())
+print("||dW_V||:", model.blocks[0].attn.Wv.weight.grad.norm().item())
+model.zero_grad(set_to_none=True)
+
+with GIM(model,
+         freeze_norm=False,
+         softmax_temperature=None,
+         q_scale=None, k_scale=None, v_scale=None):
+    logits = model(x)  # [B, T, V]
+    loss = F.cross_entropy(
+        logits.reshape(-1, logits.size(-1)),  # [B*T, V]
+        y.reshape(-1)                         # [B*T]
+    )
+    loss.backward()
+
+print("loss:", float(loss))
+print("||dW_Q||:", model.blocks[0].attn.Wq.weight.grad.norm().item())
+print("||dW_K||:", model.blocks[0].attn.Wk.weight.grad.norm().item())
+print("||dW_V||:", model.blocks[0].attn.Wv.weight.grad.norm().item())
+model.zero_grad(set_to_none=True)
+
+
+logits = model(x)  # [B, T, V]
+loss = F.cross_entropy(
+    logits.reshape(-1, logits.size(-1)),  # [B*T, V]
+    y.reshape(-1)                         # [B*T]
+)
+loss.backward()
+
+print("loss:", float(loss))
+print("||dW_Q||:", model.blocks[0].attn.Wq.weight.grad.norm().item())
+print("||dW_K||:", model.blocks[0].attn.Wk.weight.grad.norm().item())
+print("||dW_V||:", model.blocks[0].attn.Wv.weight.grad.norm().item())
+model.zero_grad(set_to_none=True)
