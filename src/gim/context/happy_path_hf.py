@@ -46,7 +46,7 @@ class TinyLM(nn.Module):
         self.tok = nn.Embedding(vocab_size, d_model)
         self.pos = nn.Embedding(max_len, d_model)
         self.blocks = nn.ModuleList([TinyBlock(d_model, n_heads) for _ in range(n_layers)])
-        self.ln_f = nn.LayerNorm(d_model)
+        self.ln_f = nn.RMSNorm(d_model)
         self.head = nn.Linear(d_model, vocab_size, bias=False)
 
     def forward(self, tokens: torch.LongTensor):

@@ -15,10 +15,11 @@ class LayerNormDetach(nn.LayerNorm):
         return y
 
 class RMSNormDetach(nn.Module):
-    def __init__(self, normalized_shape, eps: float = 1e-5, elementwise_affine: bool = True, device=None, dtype=None):
+    def __init__(self, normalized_shape, eps: float | None, elementwise_affine: bool = True, device=None, dtype=None):
         super().__init__()
         self.normalized_shape = (normalized_shape,) if isinstance(normalized_shape, int) else tuple(normalized_shape)
-        self.eps = eps; self.elementwise_affine = elementwise_affine
+        self.eps = eps or 1e-5
+        self.elementwise_affine = elementwise_affine
         if elementwise_affine:
             self.weight = nn.Parameter(torch.ones(self.normalized_shape, device=device, dtype=dtype))
         else:
