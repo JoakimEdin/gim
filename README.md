@@ -1,6 +1,8 @@
-Official repository for the paper GIM: Improved Interpretability for Large Language Models
+# Official repository for the paper GIM: Improved Interpretability for Large Language Models.
 
-I've tested many approaches before ending up with GIM, and this is visible in the complexity of the code. GIM can be implemented in a simpler manner than in this repository, for example, by using Transformer Lens. I will release a better implementation after I've handed in my PhD thesis 1st of August.
+If you want to use GIM for your own experiment, you should use [this PyPI package](https://pypi.org/project/gim-explain/). The code for the PyPI package is found in [this repository](https://github.com/corticph/gim).
+
+The code in this repository is for reproducing the experiments in the paper. The code is less useful for other use cases.
 
 ## Setup
 ### Setup uv and pre-install
