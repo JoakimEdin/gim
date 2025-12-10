@@ -1,6 +1,8 @@
 # Official repository for the paper GIM: Improved Interpretability for Large Language Models.
 
-If you want to use GIM for your own experiment, you should use [this PyPI package](https://pypi.org/project/gim-explain/). The code for the PyPI package is found in [this repository](https://github.com/corticph/gim).
+GIM (Gradient Interaction Modifications) is a state-of-the-art feature attribution method and circuit discovery method. It currently leads the leaderboard for the [Mechanistic Interpretability Benchmark](https://huggingface.co/spaces/mib-bench/leaderboard), while being as fast as gradients.
+
+We have created [this PyPI package](https://pypi.org/project/gim-explain/) to make it effortless to use GIM on any Large Language Model. The code for the PyPI package is found in [this repository](https://github.com/corticph/gim).
 
 The code in this repository is for reproducing the experiments in the paper. The code is less useful for other use cases.
 
